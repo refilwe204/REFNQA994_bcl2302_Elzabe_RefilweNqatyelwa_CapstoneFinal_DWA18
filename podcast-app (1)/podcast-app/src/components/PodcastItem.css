@@ -1,0 +1,60 @@
+/* src/components/PodcastItem.css */
+.podcast-item {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer; /* Add pointer cursor to indicate interactivity */
+  position: relative; /* Add relative positioning for the description */
+}
+
+.podcast-item h3 {
+  display: none; /* Hide the title by default */
+}
+
+.podcast-item p {
+  font-size: 1rem;
+}
+
+.podcast-item audio {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Style the podcast images */
+.podcast-item img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 10px auto; /* Add some margin for spacing */
+  border-radius: 4px;
+  cursor: pointer; /* Add pointer cursor to indicate interactivity */
+}
+
+/* Style the overlay */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  z-index: 9999; /* Ensure the overlay appears above other elements */
+  /* Add additional styles for the overlay */
+  
+}
+
+/* Show the overlay when the podcast item is clicked */
+.podcast-item.show-overlay .overlay {
+  display: block;
+}
+
+/* Style the description preview */
+.description-preview {
+  display: block;
+  max-height: 80px;
+  overflow: hidden;
+}
