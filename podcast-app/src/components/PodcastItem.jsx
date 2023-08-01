@@ -32,12 +32,13 @@ const PodcastItem = ({ podcast }) => {
       </div>
 
       <audio controls onPlay={handleAudioPlay} onPause={handleAudioPause}>
-        <source src={podcast.audio} type="audio/mpeg" />
+        <source src={podcast.audio} type="episode.episode" />
         Your browser does not support the audio element.
       </audio>
     </div>
   );
 };
+
 
 // Prop-types validation
 PodcastItem.propTypes = {

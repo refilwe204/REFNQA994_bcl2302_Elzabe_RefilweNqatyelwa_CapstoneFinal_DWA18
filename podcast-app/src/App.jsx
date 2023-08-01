@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import Header from './components/Header';
 import PodcastList from './components/PodcastList';
-import ShowBrowser from './components/ShowBrowser'; // Import the ShowBrowser component
+
+
 
 const App = () => {
   const [podcasts, setPodcasts] = useState([]);
@@ -31,7 +32,7 @@ const App = () => {
       ) : (
         <>
           <PodcastList podcasts={podcasts} />
-          <ShowBrowser shows={podcasts} /> {/* Use the ShowBrowser component */}
+         
         </>
       )}
     </div>
