@@ -1,8 +1,0 @@
-
-.podcast-list {
-  background-color: rgb(47, 41, 41);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  justify-items: center;
-}
