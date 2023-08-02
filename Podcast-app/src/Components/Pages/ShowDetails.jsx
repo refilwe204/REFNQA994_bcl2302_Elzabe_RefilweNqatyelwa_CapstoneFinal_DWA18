@@ -34,10 +34,7 @@ function ShowDetails() {
             <div className="card" style={{ width: '35rem' }}>
               <img src={podcast.image} alt={podcast.title} className="card-img-top" />
               <div className="card-body">
-                <h5 className="card-title">{podcast.title}</h5>
-                <p className="card-text">
-                  {podcast.description}
-                </p>
+                <h5 className="card-title">{podcast.title}</h5>          
               </div>
 
             </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
 const SeasonList = ({ showId, seasons, onSeasonSelect }) => {
   return (
@@ -15,6 +15,17 @@ const SeasonList = ({ showId, seasons, onSeasonSelect }) => {
       </ul>
     </div>
   );
+};
+
+SeasonList.propTypes = {
+  showId: PropTypes.number.isRequired,
+  seasons: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      number: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+  onSeasonSelect: PropTypes.func.isRequired,
 };
 
 export default SeasonList;

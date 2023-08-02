@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 
 const AudioPlayer = ({ episode, onPlaybackChange }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -20,12 +21,15 @@ const AudioPlayer = ({ episode, onPlaybackChange }) => {
       setCurrentTime(audioRef.current.currentTime);
     };
 
+    // Store a reference to the function to remove it later
+    const removeUpdateListener = () => {
+      audioRef.current.removeEventListener('timeupdate', updateTime);
+    };
+
     audioRef.current.addEventListener('timeupdate', updateTime);
 
     // Cleanup event listener
-    return () => {
-      audioRef.current.removeEventListener('timeupdate', updateTime);
-    };
+    return removeUpdateListener;
   }, []);
 
   const handlePlayback = () => {
@@ -58,6 +62,14 @@ const AudioPlayer = ({ episode, onPlaybackChange }) => {
       </div>
     </div>
   );
+};
+
+AudioPlayer.propTypes = {
+  episode: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    audioUrl: PropTypes.string.isRequired,
+  }).isRequired,
+  onPlaybackChange: PropTypes.func.isRequired,
 };
 
 export default AudioPlayer;

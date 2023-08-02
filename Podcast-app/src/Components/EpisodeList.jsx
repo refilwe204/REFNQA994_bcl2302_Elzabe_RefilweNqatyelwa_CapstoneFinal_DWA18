@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
 const EpisodeList = ({ episodes, onEpisodeSelect }) => {
   return (
@@ -15,6 +15,17 @@ const EpisodeList = ({ episodes, onEpisodeSelect }) => {
       </ul>
     </div>
   );
+};
+
+EpisodeList.propTypes = {
+  episodes: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      // Add more PropTypes as needed for other properties of the 'episodes' object
+    })
+  ).isRequired,
+  onEpisodeSelect: PropTypes.func.isRequired,
 };
 
 export default EpisodeList;

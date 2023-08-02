@@ -70,7 +70,6 @@ const Podcasts = () => {
                   <p className="card-text">{show.description.length > 100 ? show.description.slice(0, 100) + '...' : show.description}</p>
                 </div>
                 <ul className="list-group list-group-flush">
-                  <li className="list-group-item">Seasons: {show.seasons}</li>
                   <li className="list-group-item">Last Updated: {show.updated}</li>
                   <li className="list-group-item">Genres: {show.genres}</li>
                 </ul>
