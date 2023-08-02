@@ -18,8 +18,7 @@ const PodcastItem = ({ podcast }) => {
   };
 
   return (
-    <div className={`podcast-item ${showOverlay ? 'show-overlay' : ''}`} onClick={handleToggleOverlay} >
-      {/* Display the podcast image with fixed height and width */}
+    <div className={`podcast-item ${showOverlay ? 'show-overlay' : ''}`} onClick={handleToggleOverlay}>
       <img src={podcast.image} alt={`Podcast - ${podcast.title}`} height="200" width="200" />
 
       <div className="overlay" onClick={handleToggleOverlay}>
@@ -32,15 +31,13 @@ const PodcastItem = ({ podcast }) => {
       </div>
 
       <audio controls onPlay={handleAudioPlay} onPause={handleAudioPause}>
-        <source src={podcast.audio} type="episode.episode" />
-        Your browser does not support the audio element.
+        <source src={podcast.audio} type="audio/mpeg" />
+
       </audio>
     </div>
   );
 };
 
-
-// Prop-types validation
 PodcastItem.propTypes = {
   podcast: PropTypes.shape({
     image: PropTypes.string.isRequired,
