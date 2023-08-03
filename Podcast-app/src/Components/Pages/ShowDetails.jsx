@@ -23,7 +23,6 @@ function ShowDetails() {
   // Debug information
   console.log('params.id:', params.id);
   console.log('podcast:', podcast);
-
   return (
     <div className="container p-3 m-0">
       <div className="row">
@@ -34,9 +33,12 @@ function ShowDetails() {
             <div className="card" style={{ width: '35rem' }}>
               <img src={podcast.image} alt={podcast.title} className="card-img-top" />
               <div className="card-body">
-                <h5 className="card-title">{podcast.title}</h5>          
+                <h5 className="card-title">{podcast.title}</h5>
+                {/* Corrected code below */}
+                <p className="card-text">
+                  {podcast.description.length > 100 ? podcast.description.slice(0, 100) + '...' : podcast.description}
+                </p>
               </div>
-
             </div>
           </div>
         ) : (

@@ -1,21 +1,19 @@
-import React from 'react';
+import  { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap-icons/font/bootstrap-icons.css'; 
 
-
 const Podcasts = () => {
-  // State to store favorite show IDs
-  const [favorites, setFavorites] = React.useState(() => {
+  const [favorites, setFavorites] = useState(() => {
     const savedFavorites = localStorage.getItem('favorites');
     return savedFavorites ? JSON.parse(savedFavorites) : [];
   });
 
-  const [shows, setShows] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
-  const [filter, setFilter] = React.useState('A-Z'); // Default filter set to A-Z
+  const [shows, setShows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState('A-Z');
+  const [searchTerm, setSearchTerm] = useState('');
 
-  React.useEffect(() => {
-    // Fetch the list of shows from the API
+  useEffect(() => {
     fetch('https://podcast-api.netlify.app/shows')
       .then((response) => response.json())
       .then((data) => {
@@ -32,23 +30,19 @@ const Podcasts = () => {
     setFilter(selectedFilter);
   };
 
-
   const sortShows = (a, b) => {
     if (filter === 'A-Z') {
       return a.title.localeCompare(b.title);
     } else if (filter === 'Z-A') {
       return b.title.localeCompare(a.title);
     } else if (filter === 'ascending') {
-      // Convert seasons to numbers before comparison
       return parseInt(a.seasons) - parseInt(b.seasons);
     } else if (filter === 'descending') {
-      // Convert seasons to numbers before comparison
       return parseInt(b.seasons) - parseInt(a.seasons);
     }
     return 0;
   };
 
-  // Function to toggle favorite status
   const toggleFavorite = (id) => {
     if (favorites.includes(id)) {
       setFavorites(favorites.filter((favId) => favId !== id));
@@ -56,13 +50,10 @@ const Podcasts = () => {
       setFavorites([...favorites, id]);
     }
   };
-  
-  
-  // Function to check if a show is in favorites
+
   const isFavorite = (id) => favorites.includes(id);
 
-  // Save favorites to local storage whenever it changes
-  React.useEffect(() => {
+  useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favorites));
   }, [favorites]);
 
@@ -70,36 +61,39 @@ const Podcasts = () => {
     return <div>Loading...</div>;
   }
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const filteredShows = shows.filter((show) =>
+      show.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setShows(filteredShows);
+    setSearchTerm(''); // Set the search term back to an empty string
+  };
+  
   return (
     <div className="container">
       <h2>All Shows</h2>
       <div className="row mb-3">
         <div className="col">
           <div className="btn-group">
-            <button
-              type="button"
-              className="btn btn-secondary dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Filter By: {filter}
+            <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Sort by
             </button>
-            <div className="dropdown-menu">
-              <button className="dropdown-item" type="button" onClick={() => handleFilterChange('A-Z')}>
-                A-Z
-              </button>
-              <button className="dropdown-item" type="button" onClick={() => handleFilterChange('Z-A')}>
-                Z-A
-              </button>
-              <button className="dropdown-item" type="button" onClick={() => handleFilterChange('ascending')}>
-                Ascending Order
-              </button>
-              <button className="dropdown-item" type="button" onClick={() => handleFilterChange('descending')}>
-                Descending Order
-              </button>
-            </div>
+            <ul className="dropdown-menu">
+              <li><button className="dropdown-item" onClick={() => handleFilterChange('A-Z')}>A-Z</button></li>
+              <li><button className="dropdown-item" onClick={() => handleFilterChange('Z-A')}>Z-A</button></li>
+              <li><button className="dropdown-item" onClick={() => handleFilterChange('ascending')}>Ascending Order</button></li>
+              <li><button className="dropdown-item" onClick={() => handleFilterChange('descending')}>Descending Order</button></li>
+            </ul>
           </div>
+        </div>
+        <div className="col">
+          <form className="d-flex mx-auto" onSubmit={handleSearch}>
+            <input className="form-control  rounded-pill border border-5 fs-2 ms-5" type="search" placeholder="Search" aria-label="Search"/>
+            <button className="btn btn-outline-secondary ms-2" type="submit">
+              Search
+            </button>
+          </form>
         </div>
       </div>
       <div className="row">
@@ -118,10 +112,9 @@ const Podcasts = () => {
                   <li className="list-group-item">Last Updated: {formatDate(show.updated)}</li>
                   <li className="list-group-item">Genres: {show.genres}</li>
                   <li className="list-group-item">
-                  <Link to={`/podcasts/${show.id}/seasons`} className="btn btn-secondary">
-                   Seasons
-                  </Link>
-
+                    <Link to={`/podcasts/${show.id}/seasons`} className="btn btn-secondary">
+                      Seasons
+                    </Link>
                   </li>
                   <button
                     onClick={() => toggleFavorite(show.id)}
@@ -139,8 +132,6 @@ const Podcasts = () => {
   );
 };
 
-
-// Function to format the date
 function formatDate(dateString) {
   const options = { day: 'numeric', month: 'numeric', year: 'numeric' };
   const date = new Date(dateString);
@@ -148,5 +139,3 @@ function formatDate(dateString) {
 }
 
 export default Podcasts;
-
-

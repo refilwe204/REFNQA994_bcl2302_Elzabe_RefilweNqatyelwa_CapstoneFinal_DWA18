@@ -1,7 +1,7 @@
 import About from './Components/Pages/About';
-import Home from './Components/Pages/Home';
 import Podcasts from './Components/Pages/Podcasts';
 import ShowDetails from './Components/Pages/ShowDetails';
+import Preview from './Components/Pages/Preview';
 
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
@@ -9,8 +9,6 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 function App() {
   return (
 <BrowserRouter>
-
-
 <header className="bg-dark">
 
 <nav className="nav nav-pills flex-row P-2">
@@ -29,23 +27,19 @@ function App() {
       <li><a className="dropdown-item" href="#">Kids & Family</a></li>
     </ul>
     <Link to="/podcasts" className="flex-sm-fill text-sm-center nav-link text-light" href="#">Podcasts</Link>
-  <a className="flex-sm-fill text-sm-center nav-link text-light" href="#">Episodes</a>
   <Link to="/about" className="flex-sm-fill text-sm-center nav-link text-light" href="#">About</Link>
+  <Link to="/preview" className="flex-sm-fill text-sm-center nav-link text-light" href="#">Preview</Link>
   
 </nav>
 </header>
-
-
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/podcasts" element={<Podcasts />} />
+    <Routes>
+        <Route path="/" element={<Podcasts />} />
         <Route path="/podcasts/:id" element={<ShowDetails />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/preview" element={<Preview />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
-
 
 export default App;

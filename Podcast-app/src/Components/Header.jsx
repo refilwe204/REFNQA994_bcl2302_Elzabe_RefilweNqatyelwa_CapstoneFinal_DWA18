@@ -13,10 +13,7 @@ export default function Header() {
 </div>
   <nav className="navbar ">
   <div className="container-fluid ">
-    <form className="d-flex mx-auto ">
-      <input className="form-control  rounded-pill border border-5 fs-2 ms-5" type="search" placeholder="Search" aria-label="Search"/>
-      <button className="btn btn-outline-secondary ms-3" type="submit">Search</button>
-    </form>
+    
   </div>
 </nav>
   </div>
