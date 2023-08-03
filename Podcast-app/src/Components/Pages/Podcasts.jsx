@@ -119,8 +119,9 @@ const Podcasts = () => {
                   <li className="list-group-item">Genres: {show.genres}</li>
                   <li className="list-group-item">
                   <Link to={`/podcasts/${show.id}/seasons`} className="btn btn-secondary">
-                    Seasons
+                   Seasons
                   </Link>
+
                   </li>
                   <button
                     onClick={() => toggleFavorite(show.id)}
@@ -147,3 +148,5 @@ function formatDate(dateString) {
 }
 
 export default Podcasts;
+
+
