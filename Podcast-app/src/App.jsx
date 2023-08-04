@@ -1,44 +1,76 @@
-import About from './Components/Pages/About';
-import Podcasts from './Components/Pages/Podcasts';
-import ShowDetails from './Components/Pages/ShowDetails';
-import Preview from './Components/Pages/Preview';
-
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-
+import React, { useEffect, useState } from 'react';
+import './index.css';
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import Favorite from './components/Favorite';
+import Preview from './components/Preview';
+import History from './components/History';
 
 function App() {
-  return (
-<BrowserRouter>
-<header className="bg-dark">
+  const [currentPage, setCurrentPage] = useState(localStorage.getItem('currentPage') || 'home');
+  const [selectedPodcast, setSelectedPodcast] = useState(
+    JSON.parse(localStorage.getItem('selectedPodcast')) || null
+  );
+  const [favorites, setFavorites] = useState(
+    JSON.parse(localStorage.getItem('favoriteEpisodes')) || []
+  );
 
-<nav className="nav nav-pills flex-row P-2">
-  
-  <Link to="/" className="flex-sm-fill text-sm-center nav-link  text-light" aria-current="page" href="#">Home</Link>
-  <a className="flex-sm-fill text-sm-center nav-link dropdown-toggle text-light" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Genres</a>
-  <ul className="dropdown-menu">
-      <li><a className="dropdown-item" href="#">Personal Growth</a></li>
-      <li><a className="dropdown-item" href="#">True Crime& Investigative Journalism</a></li>
-      <li><a className="dropdown-item" href="#">History</a></li>
-      <li><a className="dropdown-item" href="#">Comedy</a></li>
-      <li><a className="dropdown-item" href="#">Entertainment</a></li>
-      <li><a className="dropdown-item" href="#">Business</a></li>
-      <li><a className="dropdown-item" href="#">Fiction</a></li>
-      <li><a className="dropdown-item" href="#">News</a></li>
-      <li><a className="dropdown-item" href="#">Kids & Family</a></li>
-    </ul>
-    <Link to="/podcasts" className="flex-sm-fill text-sm-center nav-link text-light" href="#">Podcasts</Link>
-  <Link to="/about" className="flex-sm-fill text-sm-center nav-link text-light" href="#">About</Link>
-  <Link to="/preview" className="flex-sm-fill text-sm-center nav-link text-light" href="#">Preview</Link>
-  
-</nav>
-</header>
-    <Routes>
-        <Route path="/" element={<Podcasts />} />
-        <Route path="/podcasts/:id" element={<ShowDetails />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/preview" element={<Preview />} />
-      </Routes>
-    </BrowserRouter>
+  const handleNavigation = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handleEpisodeComplete = (episode) => {
+    if (!listeningHistory.some((item) => item.id === episode.id)) {
+      setListeningHistory((prevHistory) => [...prevHistory, episode]);
+    }
+  };
+
+  const handleEpisodeProgress = (episode, currentTime) => {
+    if (currentTime >= episode.duration - 10) {
+      setLastListened({
+        show: episode.show,
+        episode: episode.title,
+        progress: currentTime,
+      });
+    }
+  };
+
+  const handleFavoriteClick = (episode) => {
+    if (!favorites.some((fav) => fav.id === episode.id)) {
+      setFavorites((prevFavorites) => [...prevFavorites, episode]);
+    }
+  };
+
+  useEffect(() => {
+    localStorage.setItem('currentPage', currentPage);
+    localStorage.setItem('selectedPodcast', JSON.stringify(selectedPodcast));
+  }, [currentPage, selectedPodcast]);
+
+  useEffect(() => {
+    localStorage.setItem('favoriteEpisodes', JSON.stringify(favorites));
+  }, [favorites]);
+
+  return (
+    <>
+      <Navbar onNavigate={handleNavigation} />
+      <br />
+      <br />
+      {currentPage === 'home' && (
+        <Home onPodcastClick={setSelectedPodcast} selectedPodcast={selectedPodcast} />
+      )}
+      {currentPage === 'favorite' && (
+        <Favorite favorites={favorites} setFavorites={setFavorites} />
+      )}
+      {currentPage === 'preview' && (
+        <Preview
+          podcastId={selectedPodcast?.id}
+          onFavoriteClick={handleFavoriteClick} // Pass the handleFavoriteClick function as a prop
+          onEpisodeComplete={handleEpisodeComplete}
+          onEpisodeProgress={handleEpisodeProgress}
+        />
+      )}
+      {currentPage === 'history' && <History />}
+    </>
   );
 }
 

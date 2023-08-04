@@ -1,0 +1,188 @@
+/* CSS for Navbar */
+
+.navbar-container {
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 60px;
+  padding: 0 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-container button {
+  background-color: #fff;
+  color: #333;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.navbar-container button:hover {
+  background-color: #f0f0f0;
+}
+
+/* ===========================================================================================================================*/
+/*Home.css*/
+
+/* Main container for the Home component */
+.home-container {
+  text-align: center;
+  padding: 20px;
+}
+
+/* Header style */
+h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Show list style */
+.show-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Show link style */
+.show-link {
+  text-decoration: none;
+  color: #333;
+}
+
+/* Show info container style */
+.show-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+/* Show image style */
+.show-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+/* Show title style */
+.show-title {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+/* Show description style */
+.show-description {
+  font-size: 16px;
+}
+
+/* Show info hover effect */
+.show-info:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/*=========================================================================================================================== */
+
+/* Preview.css */
+.preview-container {
+  margin: 10px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+h3 {
+  font-size: 20px;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+h4 {
+  font-size: 18px;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+p {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #e6e6e6;
+  border: none;
+  color: #333;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: block;
+  margin: 20px;
+  margin: 0 auto; /* Center align the buttons */
+  height: 50%;
+  width: 50%; /* Set a fixed width for the buttons */
+}
+
+button:hover {
+  background-color: #ccc;
+}
+
+.show-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+audio {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Show the episodes list when the button is clicked */
+.episodes-list {
+  display: none;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+}
+
+/* Add a class to show the episodes list */
+.show-episodes {
+  display: block !important;
+}
