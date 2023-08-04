@@ -9,13 +9,13 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: 60px;
+  height: 70px;
   padding: 0 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-container button {
-  background-color: #fff;
+  background-color: #eaedde;
   color: #333;
   border: none;
   padding: 10px 20px;
@@ -26,7 +26,7 @@
 }
 
 .navbar-container button:hover {
-  background-color: #f0f0f0;
+  background-color: #b39e9e;
 }
 
 /* ===========================================================================================================================*/
@@ -102,9 +102,9 @@ h1 {
 .preview-container {
   margin: 10px;
   padding: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid #e9c3c3;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: #8ac1ad;
 }
 
 h2 {
@@ -186,4 +186,57 @@ audio {
 .show-episodes {
   display: block !important;
 }
+
+/* Home.css */
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Move content to the left */
+  padding: 20px;
+}
+
+.search-sort-container {
+  display: flex;
+  justify-content: flex-end; /* Move sort buttons to the right */
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-right: 10px;
+}
+
+select {
+  padding: 10px;
+}
+
+.show-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.show-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.show-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.show-details {
+  flex: 1;
+}
+
+
+
 
