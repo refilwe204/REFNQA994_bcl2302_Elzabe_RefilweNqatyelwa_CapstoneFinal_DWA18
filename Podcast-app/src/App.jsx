@@ -5,7 +5,6 @@ import Home from './components/Home';
 import Favorite from './components/Favorite';
 import Preview from './components/Preview';
 import History from './components/History';
-import supabase from './config/SupabaseClient';
 
 
 function App() {
