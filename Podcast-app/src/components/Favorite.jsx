@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+
 
 const Favorite = ({ favorites, setFavorites }) => { // Pass 'setFavorites' from App.js
   const [localFavorites, setLocalFavorites] = useState(favorites);
@@ -32,6 +34,11 @@ const Favorite = ({ favorites, setFavorites }) => { // Pass 'setFavorites' from 
       )}
     </div>
   );
+};
+
+Favorite.propTypes = {
+  favorites: PropTypes.array.isRequired,
+  setFavorites: PropTypes.func.isRequired,
 };
 
 export default Favorite;

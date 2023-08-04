@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import{ useEffect, useState } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+
 
 const Preview = ({ podcastId, onFavoriteClick, onEpisodeComplete, onEpisodeProgress }) => {
   const [podcast, setPodcast] = useState(null);
@@ -83,6 +85,13 @@ const Preview = ({ podcastId, onFavoriteClick, onEpisodeComplete, onEpisodeProgr
       )}
     </div>
   );
+};
+
+Preview.propTypes = {
+  podcastId: PropTypes.number.isRequired,
+  onFavoriteClick: PropTypes.func.isRequired,
+  onEpisodeComplete: PropTypes.func.isRequired,
+  onEpisodeProgress: PropTypes.func.isRequired,
 };
 
 export default Preview;

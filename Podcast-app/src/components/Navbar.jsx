@@ -1,4 +1,7 @@
-import React from 'react';
+
+import PropTypes from 'prop-types';
+
+
 
 const Navbar = ({ onNavigate }) => {
   const handleNavigation = (page) => {
@@ -13,6 +16,11 @@ const Navbar = ({ onNavigate }) => {
       <button onClick={() => handleNavigation('history')}>History</button> {/* Add the History button */}
     </div>
   );
+};
+
+
+Navbar.propTypes = {
+  onNavigate: PropTypes.func.isRequired,
 };
 
 export default Navbar;

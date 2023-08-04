@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+
 
 const Home = ({ onPodcastClick, selectedPodcast }) => {
   const [showPodcast, setPodcast] = useState([]);
@@ -69,6 +71,11 @@ const Home = ({ onPodcastClick, selectedPodcast }) => {
       )}
     </div>
   );
+};
+
+Home.propTypes = {
+  onPodcastClick: PropTypes.func.isRequired,
+  selectedPodcast: PropTypes.object,
 };
 
 export default Home;
