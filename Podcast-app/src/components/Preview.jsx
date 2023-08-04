@@ -62,6 +62,7 @@ const Preview = ({ podcastId, onFavoriteClick, onEpisodeComplete, onEpisodeProgr
               <h3>Title: {season.title}</h3>
               <img src={season.image} className="show-image" alt={season.title} />
             </button>
+            
             <ul className={`episodes-list ${selectedSeason === season ? 'show-episodes' : ''}`}>
               {season.episodes.map((episode, episodeIndex) => (
                 <li key={episodeIndex}>

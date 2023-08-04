@@ -1,12 +1,10 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './index.css';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Favorite from './components/Favorite';
 import Preview from './components/Preview';
 import History from './components/History';
-import supabase from './config/SupabaseClient';
-import Signin from './components/SignIn';
 
 
 function App() {
@@ -35,7 +33,6 @@ function App() {
       // Handle episode progress
     }
   };
-  
 
   const handleFavoriteClick = (episode) => {
     if (!favorites.some((fav) => fav.id === episode.id)) {
@@ -52,14 +49,12 @@ function App() {
     localStorage.setItem('favoriteEpisodes', JSON.stringify(favorites));
   }, [favorites]);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleLogin = () => {
-    setIsLoggedIn(true)
-    console.log('In')
-
-  }
+    setIsLoggedIn(true);
+    console.log('Logged In');
+  };
 
   const handleLogOut = async () => {
     try {
@@ -70,43 +65,41 @@ function App() {
       console.error('Error logging out: ', error.message);
     }
   };
-  
-  useEffect(()=>{
 
-    if(isLoggedIn){
-      setIsLoggedIn(true)
-    }else{
-      setIsLoggedIn(false)
+  useEffect(() => {
+    if (isLoggedIn) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
 
   return (
-    {isLoggedIn} ? (
-    <>
-      <Navbar onNavigate={handleNavigation} />
-      <br />
-      <br />
-      {currentPage === 'home' && (
-        <Home onPodcastClick={setSelectedPodcast} selectedPodcast={selectedPodcast} />
-      )}
-      {currentPage === 'favorite' && (
-        <Favorite favorites={favorites} setFavorites={setFavorites} />
-      )}
-      {currentPage === 'preview' && (
-        <Preview
-          podcastId={selectedPodcast?.id}
-          onFavoriteClick={handleFavoriteClick} // Pass the handleFavoriteClick function as a prop
-          onEpisodeComplete={handleEpisodeComplete}
-          onEpisodeProgress={handleEpisodeProgress}
-        />
-      )}
-      {currentPage === 'history' && <History />}
-    </>
+    isLoggedIn ? (
+      <>
+        <Navbar onNavigate={handleNavigation} />
+        <br />
+        <br />
+        {currentPage === 'home' && (
+          <Home onPodcastClick={setSelectedPodcast} selectedPodcast={selectedPodcast} />
+        )}
+        {currentPage === 'favorite' && (
+          <Favorite favorites={favorites} setFavorites={setFavorites} />
+        )}
+        {currentPage === 'preview' && (
+          <Preview
+            podcastId={selectedPodcast?.id}
+            onFavoriteClick={handleFavoriteClick} // Pass the handleFavoriteClick function as a prop
+            onEpisodeComplete={handleEpisodeComplete}
+            onEpisodeProgress={handleEpisodeProgress}
+          />
+        )}
+        {currentPage === 'history' && <History />}
+      </>
     ) : (
       <Signin onLogin={handleLogin} />
     )
   );
 }
-
 
 export default App;

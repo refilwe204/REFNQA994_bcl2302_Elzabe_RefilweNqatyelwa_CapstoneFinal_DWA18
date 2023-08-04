@@ -13,7 +13,7 @@ const Navbar = ({ onNavigate }) => {
       <button onClick={() => handleNavigation('home')}>Home</button>
       <button onClick={() => handleNavigation('favorite')}>Favorites</button>
       <button onClick={() => handleNavigation('preview')}>Preview</button>
-      <button onClick={() => handleNavigation('history')}>History</button> {/* Add the History button */}
+      <button onClick={() => handleNavigation('history')}>History</button> 
     </div>
   );
 };

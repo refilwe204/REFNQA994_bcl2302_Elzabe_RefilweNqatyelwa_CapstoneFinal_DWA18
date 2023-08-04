@@ -1,38 +1,37 @@
+import PropTypes from 'prop-types';
 import supabase from "./../config/SupabaseClient"; 
-import { ThemeSupa } from '@supabase/auth-ui-shared' 
-import { Auth } from '@supabase/auth-ui-react' 
+import { ThemeSupa } from '@supabase/ui'; 
+import { Auth } from '@supabase/auth-ui-react';
 import { useEffect, useState } from "react";  
 
-export default function Signin({onLogin}) {      
+export default function Signin({ onLogin }) {      
     
-    const [session, setSession] = useState(null)      
+    const [session, setSession] = useState(null);
     
-    useEffect(()=>{          
-        
-        supabase.auth.getSession().then(({data: { session}})=> {              
-            
+    useEffect(() => {          
+        const { data: subscriptionData } = supabase.auth.onAuthStateChange((_event, session) => {              
             setSession(session);         
+            if (session) {                  
+                onLogin();
+            }         
+        });
         
-            })          
-            
-            const {data: {subscription} } = supabase.auth.onAuthStateChange((_event, session) => {              
-                
-                setSession(session)              
-                
-                if(session){                  
-                    
-                    onLogin()             
-                
-                }         
-            
-            })          
-            
-            return () => subscription.unsubscribe()     
-        
-        }, [onLogin])      
-        
-        if(!session){         
-            
-            return <Auth supabaseClient = {supabase} appearance={{theme: ThemeSupa}} providers={['discord']} theme='dark' />     
-        
-        } }
+        return () => {
+            subscriptionData.unsubscribe();
+        };
+    }, [onLogin]);
+    
+    if (!session) {         
+        return (
+            <Auth 
+                supabaseClient={supabase} 
+                providers={['discord']} 
+                styles={{ theme: ThemeSupa }} 
+            />
+        );
+    }
+}
+
+Signin.propTypes = {
+    onLogin: PropTypes.func.isRequired,
+};
