@@ -100,7 +100,7 @@ const Home = ({ onPodcastClick, selectedPodcast }) => {
           <p className="show-description">{show.description}</p>
           <p>Genre: {getGenres(show.genres)}</p>
           <p className="show-seasons">Numbers of seasons: {show.seasons}</p>
-          <p className="show-updated">Updated: {show.updated}</p>
+          <p className="show-updated">Updated: {formatDate(show.updated)}</p>
         </div>
       </div>
     </li>
@@ -112,6 +112,13 @@ const Home = ({ onPodcastClick, selectedPodcast }) => {
     </div>
   );
 };
+
+function formatDate(dateString) {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
+  return formattedDate;
+}
+
 
 Home.propTypes = {
   onPodcastClick: PropTypes.func.isRequired,

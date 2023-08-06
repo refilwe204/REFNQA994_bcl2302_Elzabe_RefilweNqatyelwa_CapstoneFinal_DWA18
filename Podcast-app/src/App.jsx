@@ -21,7 +21,7 @@ function App() {
   };
 
   const [listeningHistory, setListeningHistory] = useState([]); // State for tracking listening history
-const [lastListened, setLastListened] = useState(null);
+const [setLastListened] = useState(null);
 
   const handleEpisodeComplete = (episode) => {
     if (!listeningHistory.some((item) => item.id === episode.id)) {
