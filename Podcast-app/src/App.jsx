@@ -1,12 +1,10 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './index.css';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Favorite from './components/Favorite';
 import Preview from './components/Preview';
 import History from './components/History';
-
-
 
 function App() {
   const [currentPage, setCurrentPage] = useState(localStorage.getItem('currentPage') || 'home');
@@ -21,8 +19,8 @@ function App() {
     setCurrentPage(page);
   };
 
-  const [listeningHistory, setListeningHistory] = useState([]); // State for tracking listening history
-const [setLastListened] = useState(null);
+  const [listeningHistory, setListeningHistory] = useState([]);
+  const [setLastListened] = useState(null);
 
   const handleEpisodeComplete = (episode) => {
     if (!listeningHistory.some((item) => item.id === episode.id)) {
@@ -55,6 +53,22 @@ const [setLastListened] = useState(null);
     localStorage.setItem('favoriteEpisodes', JSON.stringify(favorites));
   }, [favorites]);
 
+  useEffect(() => {
+    // Add event listener for the beforeunload event
+    const handleBeforeUnload = ()=> {
+      if (currentPage !== 'home') {
+        setCurrentPage('home');
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      // Clean up the event listener when the component is unmounted
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [currentPage]);
+
   return (
     <>
       <Navbar onNavigate={handleNavigation} />
@@ -69,7 +83,7 @@ const [setLastListened] = useState(null);
       {currentPage === 'preview' && (
         <Preview
           podcastId={selectedPodcast?.id}
-          onFavoriteClick={handleFavoriteClick} // Pass the handleFavoriteClick function as a prop
+          onFavoriteClick={handleFavoriteClick}
           onEpisodeComplete={handleEpisodeComplete}
           onEpisodeProgress={handleEpisodeProgress}
         />

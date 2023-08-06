@@ -241,7 +241,10 @@ select {
   background-color: #8ac1a3;
 }
 
-
+.genres-container {
+  position: relative; 
+  top: -20px;
+}
 
 
 

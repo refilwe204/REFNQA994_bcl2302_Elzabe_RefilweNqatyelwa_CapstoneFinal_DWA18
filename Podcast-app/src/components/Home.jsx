@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
@@ -36,9 +36,9 @@ const Home = ({ onPodcastClick, selectedPodcast }) => {
 
   const handleGenreChange = (event) => {
     const selectedGenreValue = event.target.value;
-    console.log('Selected Genre:', selectedGenreValue);
     setSelectedGenre(selectedGenreValue);
   };
+
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
@@ -50,7 +50,11 @@ const Home = ({ onPodcastClick, selectedPodcast }) => {
   );
 
   const genreFilteredPodcasts = selectedGenre
-    ? filteredPodcasts.filter((show) => show.genres.includes(selectedGenre))
+    ? filteredPodcasts.filter((show) =>
+        show.genres.some((genre) =>
+          genre.toLowerCase().includes(selectedGenre.toLowerCase())
+        )
+      )
     : filteredPodcasts;
 
   const sortedPodcasts = [...genreFilteredPodcasts].sort((a, b) => {
