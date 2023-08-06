@@ -14,6 +14,7 @@ const Navbar = ({ onNavigate }) => {
       <button onClick={() => handleNavigation('favorite')}>Favorites</button>
       <button onClick={() => handleNavigation('preview')}>Preview</button>
       <button onClick={() => handleNavigation('history')}>History</button> 
+      <button onClick={() => handleNavigation('genre')}>Genre</button> 
     </div>
   );
 };

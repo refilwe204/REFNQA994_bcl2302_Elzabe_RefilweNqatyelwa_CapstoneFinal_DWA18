@@ -1,4 +1,4 @@
-import{ useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const History = () => {
   const [listeningHistory, setListeningHistory] = useState(
@@ -14,28 +14,28 @@ const History = () => {
 
   useEffect(() => {
     localStorage.setItem('lastListened', JSON.stringify(lastListened));
+
+    const timer = setTimeout(() => {
+      if (lastListened.show && lastListened.episode && lastListened.progress) {
+        setListeningHistory((prevHistory) => [
+          ...prevHistory,
+          {
+            show: lastListened.show,
+            episode: lastListened.episode,
+            progress: lastListened.progress,
+            timestamp: new Date().toISOString(),
+          },
+        ]);
+      }
+    }, 10 * 60 * 1000);
+
+    return () => clearTimeout(timer);
+
   }, [lastListened]);
 
   const handleResetProgress = () => {
     setListeningHistory([]);
     setLastListened({});
-  };
-
-  const handleEpisodeComplete = (episode) => {
-    if (!listeningHistory.some((item) => item.id === episode.id)) {
-      setListeningHistory((prevHistory) => [...prevHistory, episode]);
-    }
-  };
-
-  const handleEpisodeProgress = (episode, currentTime) => {
-    if (currentTime >= episode.duration - 10) {
-      // If the current time is within the last 10 seconds of the episode duration
-      setLastListened({
-        show: episode.show,
-        episode: episode.title,
-        progress: currentTime,
-      });
-    }
   };
 
   return (
@@ -46,20 +46,14 @@ const History = () => {
           {listeningHistory.map((episode, index) => (
             <li key={index}>
               <p>Show: {episode.show}</p>
-              <p>Episode: {episode.title}</p>
+              <p>Episode: {episode.episode}</p>
+              <p>Progress: {episode.progress} seconds</p>
+              <p>Timestamp: {episode.timestamp}</p>
             </li>
           ))}
         </ul>
       ) : (
         <p>No listening history found.</p>
-      )}
-      {lastListened.show && lastListened.episode && (
-        <div>
-          <h2>Last Listened Episode</h2>
-          <p>Show: {lastListened.show}</p>
-          <p>Episode: {lastListened.episode}</p>
-          <p>Last Listened Progress: {lastListened.progress} seconds</p>
-        </div>
       )}
       <button onClick={handleResetProgress}>Reset Listening Progress</button>
     </div>
