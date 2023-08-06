@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
 const Home = ({ onPodcastClick, selectedPodcast }) => {
   const [showPodcast, setPodcast] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState(''); // Define searchTerm state
-  const [sortOption, setSortOption] = useState('az'); // Define sortOption state
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortOption, setSortOption] = useState('az');
+  const [selectedGenre, setSelectedGenre] = useState('');
 
   useEffect(() => {
     axios
@@ -21,28 +22,8 @@ const Home = ({ onPodcastClick, selectedPodcast }) => {
       });
   }, []);
 
-  const genreData = {
-    1: 'Personal Growth',
-    2: 'True Crime and Investigative Journalism',
-    3: 'History',
-    4: 'Comedy',
-    5: 'Entertainment',
-    6: 'Business',
-    7: 'Fiction',
-    8: 'News',
-    9: 'Kids and Family',
-  };
-
-  const getGenres = (genreIds) => {
-    if (Array.isArray(genreIds)) {
-      return genreIds.map((id) => genreData[id]).join(', ');
-    } else {
-      return genreData[genreIds];
-    }
-  };
-
   const handlePodcastClick = (podcast) => {
-    onPodcastClick(podcast); // Call the onPodcastClick function to set the selected podcast in the parent component
+    onPodcastClick(podcast);
   };
 
   const handleSearchChange = (event) => {
@@ -53,11 +34,26 @@ const Home = ({ onPodcastClick, selectedPodcast }) => {
     setSortOption(event.target.value);
   };
 
+  const handleGenreChange = (event) => {
+    const selectedGenreValue = event.target.value;
+    console.log('Selected Genre:', selectedGenreValue);
+    setSelectedGenre(selectedGenreValue);
+  };
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
+    return formattedDate;
+  };
+
   const filteredPodcasts = showPodcast.filter((show) =>
     show.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const sortedPodcasts = [...filteredPodcasts].sort((a, b) => {
+  const genreFilteredPodcasts = selectedGenre
+    ? filteredPodcasts.filter((show) => show.genres.includes(selectedGenre))
+    : filteredPodcasts;
+
+  const sortedPodcasts = [...genreFilteredPodcasts].sort((a, b) => {
     if (sortOption === 'az') {
       return a.title.localeCompare(b.title);
     } else if (sortOption === 'za') {
@@ -68,6 +64,18 @@ const Home = ({ onPodcastClick, selectedPodcast }) => {
       return new Date(b.updated) - new Date(a.updated);
     }
   });
+
+  const genreData = [
+    'Personal Growth',
+    'True Crime and Investigative Journalism',
+    'History',
+    'Comedy',
+    'Entertainment',
+    'Business',
+    'Fiction',
+    'News',
+    'Kids and Family',
+  ];
 
   return (
     <div className="home-container">
@@ -86,39 +94,39 @@ const Home = ({ onPodcastClick, selectedPodcast }) => {
           <option value="descDate">Sort Descending by Date</option>
         </select>
       </div>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-          <ul className="show-list">
-         {sortedPodcasts.map((show) => (  
-        <li key={show.id} onClick={() => handlePodcastClick(show)}>
-        <div className={`show-info ${show.id === selectedPodcast?.id ? 'selected' : ''}`}>
-        <img src={show.image} className="show-image" alt={show.title} />
-        <div className="show-details">
-          <h3 className="show-title">{show.title}</h3>
-          <p className="show-description">{show.description}</p>
-          <p>Genre: {getGenres(show.genres)}</p>
-          <p className="show-seasons">Numbers of seasons: {show.seasons}</p>
-          <p className="show-updated">Updated: {formatDate(show.updated)}</p>
-        </div>
+      <div className="genres-container">
+        <h2>Genres</h2>
+        <select value={selectedGenre} onChange={handleGenreChange}>
+          <option value="">Select a Genre</option>
+          {genreData.map((genre) => (
+            <option key={genre} value={genre}>
+              {genre}
+            </option>
+          ))}
+        </select>
       </div>
-    </li>
-  ))}
-</ul>
-
-        </>
+      {loading ? (
+        <p>Loading podcast list...</p>
+      ) : (
+        <ul className="show-list">
+          {sortedPodcasts.map((show) => (
+            <li key={show.id} onClick={() => handlePodcastClick(show)}>
+              <div className={`show-info ${show.id === selectedPodcast?.id ? 'selected' : ''}`}>
+                <img src={show.image} className="show-image" alt={show.title} />
+                <div className="show-details">
+                  <h3 className="show-title">{show.title}</h3>
+                  <p className="show-description">{show.description}</p>
+                  <p className="show-seasons">Numbers of seasons: {show.seasons}</p>
+                  <p className="show-updated">Updated: {formatDate(show.updated)}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );
 };
-
-function formatDate(dateString) {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
-  return formattedDate;
-}
-
 
 Home.propTypes = {
   onPodcastClick: PropTypes.func.isRequired,
