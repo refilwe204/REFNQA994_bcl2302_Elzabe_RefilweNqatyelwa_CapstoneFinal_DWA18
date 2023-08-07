@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
 const History = () => {
+  // State to store listening history and the last listened episode
   const [listeningHistory, setListeningHistory] = useState(
     JSON.parse(localStorage.getItem('listeningHistory')) || []
   );
@@ -8,13 +9,16 @@ const History = () => {
     JSON.parse(localStorage.getItem('lastListened')) || {}
   );
 
+  // Effect to update 'listeningHistory' in local storage when it changes
   useEffect(() => {
     localStorage.setItem('listeningHistory', JSON.stringify(listeningHistory));
   }, [listeningHistory]);
 
+  // Effect to update 'lastListened' in local storage and add to history
   useEffect(() => {
     localStorage.setItem('lastListened', JSON.stringify(lastListened));
 
+    // Create a timer to add to history after 10 minutes of no activity
     const timer = setTimeout(() => {
       if (lastListened.show && lastListened.episode && lastListened.progress) {
         setListeningHistory((prevHistory) => [
@@ -29,15 +33,18 @@ const History = () => {
       }
     }, 10 * 60 * 1000);
 
+    // Clean up the timer if component unmounts or 'lastListened' changes
     return () => clearTimeout(timer);
 
   }, [lastListened]);
 
+  // Function to reset listening history and last listened episode
   const handleResetProgress = () => {
     setListeningHistory([]);
     setLastListened({});
   };
 
+  // Render the History component
   return (
     <div className="history-container">
       <h1>Listening History</h1>
@@ -61,3 +68,7 @@ const History = () => {
 };
 
 export default History;
+
+//Displays a user's listening history.
+//Lists the podcasts and episodes they've listened to, along with progress and timestamps.
+//Users can reset their listening history.

@@ -7,6 +7,7 @@ import Preview from './components/Preview';
 import History from './components/History';
 
 function App() {
+  // State variables for managing the current page, selected podcast, and favorite episodes
   const [currentPage, setCurrentPage] = useState(localStorage.getItem('currentPage') || 'home');
   const [selectedPodcast, setSelectedPodcast] = useState(
     JSON.parse(localStorage.getItem('selectedPodcast')) || null
@@ -15,19 +16,23 @@ function App() {
     JSON.parse(localStorage.getItem('favoriteEpisodes')) || []
   );
 
+  // Function to handle navigation to different pages
   const handleNavigation = (page) => {
     setCurrentPage(page);
   };
 
+  // State variables for listening history and the last listened episode
   const [listeningHistory, setListeningHistory] = useState([]);
   const [setLastListened] = useState(null);
 
+  // Function to handle episode completion and update listening history
   const handleEpisodeComplete = (episode) => {
     if (!listeningHistory.some((item) => item.id === episode.id)) {
       setListeningHistory((prevHistory) => [...prevHistory, episode]);
     }
   };
 
+  // Function to handle episode progress and set last listened episode
   const handleEpisodeProgress = (episode, currentTime) => {
     if (currentTime >= episode.duration - 10) {
       setLastListened({
@@ -38,24 +43,27 @@ function App() {
     }
   };
 
+  // Function to handle favorite button click and update favorites
   const handleFavoriteClick = (episode) => {
     if (!favorites.some((fav) => fav.id === episode.id)) {
       setFavorites((prevFavorites) => [...prevFavorites, episode]);
     }
   };
 
+  // Save the current page and selected podcast in localStorage whenever they change
   useEffect(() => {
     localStorage.setItem('currentPage', currentPage);
     localStorage.setItem('selectedPodcast', JSON.stringify(selectedPodcast));
   }, [currentPage, selectedPodcast]);
 
+  // Save the favorite episodes in localStorage whenever the favorites change
   useEffect(() => {
     localStorage.setItem('favoriteEpisodes', JSON.stringify(favorites));
   }, [favorites]);
 
+  // Add event listener for the beforeunload event to reset the current page when leaving the app
   useEffect(() => {
-    // Add event listener for the beforeunload event
-    const handleBeforeUnload = ()=> {
+    const handleBeforeUnload = () => {
       if (currentPage !== 'home') {
         setCurrentPage('home');
       }
@@ -64,11 +72,11 @@ function App() {
     window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
-      // Clean up the event listener when the component is unmounted
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [currentPage]);
 
+  // Render the App component with conditional rendering based on the current page
   return (
     <>
       <Navbar onNavigate={handleNavigation} />
@@ -94,3 +102,7 @@ function App() {
 }
 
 export default App;
+
+//Manages overall app functionality and navigation.
+//Uses the Navbar to help users navigate between different sections.
+//Provides a seamless experience for users to explore podcasts, manage favorites, and track listening history.

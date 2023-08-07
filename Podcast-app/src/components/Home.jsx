@@ -3,6 +3,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 
 const Home = ({ onPodcastClick, selectedPodcast }) => {
+  // State variables
   const [showPodcast, setPodcast] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -10,6 +11,7 @@ const Home = ({ onPodcastClick, selectedPodcast }) => {
   const [selectedGenre, setSelectedGenre] = useState('');
 
   useEffect(() => {
+     // Fetch podcast data on component mount
     axios
       .get('https://podcast-api.netlify.app/shows')
       .then((response) => {
@@ -22,33 +24,41 @@ const Home = ({ onPodcastClick, selectedPodcast }) => {
       });
   }, []);
 
+   // Handle podcast click
   const handlePodcastClick = (podcast) => {
     onPodcastClick(podcast);
   };
 
+   // Handle search input change
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
+   // Handle genre selection change
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
   };
 
+   // Handle genre selection change
   const handleGenreChange = (event) => {
     const selectedGenreValue = event.target.value;
     setSelectedGenre(selectedGenreValue);
   };
 
+   // Format date as a string
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
     return formattedDate;
   };
 
+   // Filter podcasts based on search term
   const filteredPodcasts = showPodcast.filter((show) =>
     show.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  
+  // Filter podcasts based on selected genre
   const genreFilteredPodcasts = selectedGenre
     ? filteredPodcasts.filter((show) =>
         show.genres.some((genre) =>
@@ -57,6 +67,7 @@ const Home = ({ onPodcastClick, selectedPodcast }) => {
       )
     : filteredPodcasts;
 
+    // Sort podcasts based on selected sort option
   const sortedPodcasts = [...genreFilteredPodcasts].sort((a, b) => {
     if (sortOption === 'az') {
       return a.title.localeCompare(b.title);
@@ -69,6 +80,8 @@ const Home = ({ onPodcastClick, selectedPodcast }) => {
     }
   });
 
+  
+  // Genre data for the dropdown
   const genreData = [
     'Personal Growth',
     'True Crime and Investigative Journalism',
@@ -81,6 +94,7 @@ const Home = ({ onPodcastClick, selectedPodcast }) => {
     'Kids and Family',
   ];
 
+   // Render the Home component
   return (
     <div className="home-container">
       <h1>All Shows</h1>
@@ -132,9 +146,14 @@ const Home = ({ onPodcastClick, selectedPodcast }) => {
   );
 };
 
+ // Render the Home component
 Home.propTypes = {
   onPodcastClick: PropTypes.func.isRequired,
   selectedPodcast: PropTypes.object,
 };
 
 export default Home;
+
+//Displays a list of podcasts available to explore.
+//Users can click on a podcast to view more details.
+//Offers search and sorting options to find podcasts easily.
