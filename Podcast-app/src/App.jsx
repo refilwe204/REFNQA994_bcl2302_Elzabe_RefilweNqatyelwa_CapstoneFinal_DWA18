@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Favorite from './components/Favorite';
 import Preview from './components/Preview';
 import History from './components/History';
+import Authentication from './components/form';
 
 function App() {
   // State variables for managing the current page, selected podcast, and favorite episodes
@@ -24,6 +25,9 @@ function App() {
   // State variables for listening history and the last listened episode
   const [listeningHistory, setListeningHistory] = useState([]);
   const [setLastListened] = useState(null);
+  const [email ,setEmail] = useState('')
+const [password ,setPassword] = useState('')
+const [isAuthenticated , setIsAuthenticated] = useState(false)
 
   // Function to handle episode completion and update listening history
   const handleEpisodeComplete = (episode) => {
@@ -79,7 +83,15 @@ function App() {
   // Render the App component with conditional rendering based on the current page
   return (
     <>
-      <Navbar onNavigate={handleNavigation} />
+   { isAuthenticated === false ?  <Authentication
+     email={email}
+     setEmail={setEmail}
+     password={password}
+     setPassword={setPassword}
+     isAuthenticated={isAuthenticated}
+     setIsAuthenticated={setIsAuthenticated}
+     /> : <>
+     <Navbar onNavigate={handleNavigation} />
       <br />
       <br />
       {currentPage === 'home' && (
@@ -94,9 +106,15 @@ function App() {
           onFavoriteClick={handleFavoriteClick}
           onEpisodeComplete={handleEpisodeComplete}
           onEpisodeProgress={handleEpisodeProgress}
+         
         />
       )}
       {currentPage === 'history' && <History />}
+     
+     </>}
+    
+      
+
     </>
   );
 }

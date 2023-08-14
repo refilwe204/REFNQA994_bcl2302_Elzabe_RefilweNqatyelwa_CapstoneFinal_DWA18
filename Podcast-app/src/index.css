@@ -1,7 +1,7 @@
 /* CSS for Navbar */
 
 .navbar-container {
-  background-color: #333;
+  background-color: #222; /* Darker background color */
   position: fixed;
   top: 0;
   left: 0;
@@ -11,12 +11,12 @@
   align-items: center;
   height: 70px;
   padding: 0 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Slightly darker box-shadow */
 }
 
 .navbar-container button {
-  background-color: #eaedde;
-  color: #333;
+  background-color: #444; /* Darker button color */
+  color: #eee; /* Light text color */
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -26,7 +26,7 @@
 }
 
 .navbar-container button:hover {
-  background-color: #b39e9e;
+  background-color: #666; /* Slightly lighter button color on hover */
 }
 
 /* ===========================================================================================================================*/
@@ -36,13 +36,14 @@
 .home-container {
   text-align: center;
   padding: 20px;
+  background-color: #333; /* Dark background color */
+  color: #eee; /* Light text color */
 }
 
 /* Header style */
 h1 {
   font-size: 28px;
   margin-bottom: 20px;
-  color: #333;
 }
 
 /* Show list style */
@@ -55,7 +56,7 @@ h1 {
 /* Show link style */
 .show-link {
   text-decoration: none;
-  color: #333;
+  color: #eee;
 }
 
 /* Show info container style */
@@ -63,11 +64,11 @@ h1 {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid #555; /* Darker border color */
   border-radius: 8px;
   padding: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly darker box-shadow with animation */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* Show image style */
@@ -93,7 +94,7 @@ h1 {
 /* Show info hover effect */
 .show-info:hover {
   transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Slightly darker box-shadow on hover with more depth */
 }
 
 /*=========================================================================================================================== */
@@ -102,33 +103,32 @@ h1 {
 .preview-container {
   margin: 10px;
   padding: 15px;
-  border: 1px solid #e9c3c3;
+  border: 1px solid #555; /* Darker border color */
   border-radius: 8px;
-  background-color: #8ac1ad;
+  background-color: #666; /* Darker background color */
 }
 
 h2 {
   font-size: 24px;
   margin-bottom: 10px;
-  color: #333;
 }
 
 h3 {
   font-size: 20px;
   margin-bottom: 5px;
-  color: #555;
+  color: #aaa; /* Lighter text color */
 }
 
 h4 {
   font-size: 18px;
   margin-bottom: 5px;
-  color: #666;
+  color: #ccc; /* Lighter text color */
 }
 
 p {
   font-size: 16px;
   margin-bottom: 10px;
-  color: #444;
+  color: #bbb; /* Lighter text color */
 }
 
 ul {
@@ -141,23 +141,22 @@ li {
 }
 
 button {
-  background-color: #e6e6e6;
+  background-color: #555; /* Darker button color */
   border: none;
-  color: #333;
+  color: #eee; /* Light text color */
   padding: 10px 20px;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.2s ease;
   display: block;
-  margin: 20px;
-  margin: 0 auto; /* Center align the buttons */
+  margin: 20px auto; /* Center align the buttons */
   height: 50%;
   width: 50%; /* Set a fixed width for the buttons */
 }
 
 button:hover {
-  background-color: #ccc;
+  background-color: #777; /* Slightly lighter button color on hover */
 }
 
 .show-image {
@@ -177,15 +176,18 @@ audio {
 .episodes-list {
   display: none;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #555; /* Darker border color */
   border-radius: 8px;
-  background-color: #f5f5f5;
+  background-color: #777; /* Slightly darker background color */
 }
 
 /* Add a class to show the episodes list */
 .show-episodes {
   display: block !important;
 }
+
+/* Rest of your CSS code... */
+
 
 /* Home.css */
 
@@ -238,14 +240,10 @@ select {
 }
 
 .favorite-container{
-  background-color: #8ac1a3;
+  background-color: #202622;
 }
 
 .genres-container {
   position: relative; 
   top: -20px;
 }
-
-
-
-
